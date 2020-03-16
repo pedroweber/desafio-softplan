@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Pessoa</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form [formGroup]="pessoaForm" (ngSubmit)="editar()">
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" class="form-control" placeholder="CPF" formControlName="cpf" mask="099.099.099-99"
+                readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" formControlName="nome" class="form-control" placeholder="Nome" required />
+            <div *ngIf="pessoaForm.get('nome').invalid && (pessoaForm.get('nome').dirty ||
+              pessoaForm.get('nome').touched)" class="alert alert-danger">
+                O Nome é obrigatório.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select class="form-control" formControlName="sexo" id="sexo">
+                <option value="Feminino">Feminino</option>
+                <option value="Masculino">Masculino</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" name="email" class="form-control" placeholder="E-mail" formControlName="email" />
+            <div *ngIf="pessoaForm.get('email').invalid && (pessoaForm.get('email').dirty ||
+                          pessoaForm.get('email').touched)" class="alert alert-danger">
+                <div *ngIf="!pessoaForm.get('email').hasError('required') && pessoaForm.get('email').hasError('email')">
+                    Informe um formato de e-mail válido.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dataNascimento">Data de Nascimento</label>
+            <input type="date" name="dataNascimento" class="form-control" placeholder="Data de Nascimento"
+                formControlName="dataNascimento"  required />
+            <div *ngIf="pessoaForm.get('dataNascimento').invalid && (pessoaForm.get('dataNascimento').dirty ||
+                                      pessoaForm.get('dataNascimento').touched)" class="alert alert-danger">
+                <div *ngIf="pessoaForm.get('dataNascimento').hasError('required')">
+                    A Data de Nascimento é obrigatória.
+                </div>
+                <div
+                    *ngIf="!pessoaForm.get('dataNascimento').hasError('required') && pessoaForm.get('dataNascimento').hasError('dataNascimento')">
+                    A Data de Nascimento não pode ser maior que a data atual
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="naturalidade">Naturalidade</label>
+            <input type="text" name="naturalidade" class="form-control" placeholder="Naturalidade"
+                formControlName="naturalidade" />
+        </div>
+
+        <div class="form-group">
+            <label for="nacionalidade">Nacionalidade</label>
+            <input type="text" name="nacionalidade" class="form-control" placeholder="Nacionalidade"
+                formControlName="nacionalidade" />
+        </div>
+
+        
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deletar()">Deletar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="pessoaForm.invalid">Salvar</button>
+    </div>
+</form>
