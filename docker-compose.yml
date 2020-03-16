@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mysqldb:
+    image: mysql:8
+    container_name: mysqldb
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=desafiosoftplandb
+    expose:
+      - 3306
+
+  backend:
+    build: CadPessoa-BackEnd
+    image: weberpedro/desafio-softplan-backend
+    ports:
+        - 8080:8080
+    depends_on: 
+        - mysqldb  
+  
+  frontend:
+    build: CadPessoa-FrontEnd
+    image: weberpedro/desafio-softplan-frontend
+    ports:
+        - 4200:4200
+    depends_on: 
+        - backend  
+    
